@@ -1,10 +1,26 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './api/app.controller';
-import { AppService } from './domain/services/app.service';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import * as httpContext from 'express-http-context';
+import { APP_GUARD } from '@nestjs/core';
+import { TokenGuard } from './api/guards/token.guard';
+import { ContextService } from './domain/services/context.service';
+import { ConfigService } from './config/config.service';
+import { AppController } from './api/controllers/app.controller';
+
+const PROVIDERS = [ContextService, ConfigService];
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [...PROVIDERS,
+    {
+      provide: APP_GUARD,
+      useClass: TokenGuard,
+    }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
+    consumer
+        .apply(httpContext.middleware)
+        .forRoutes(AppController);
+  }
+}
