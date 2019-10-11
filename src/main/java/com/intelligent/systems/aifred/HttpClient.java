@@ -19,6 +19,6 @@ public class HttpClient {
   private RestTemplate restTemplate;
 
   public <T> ResponseEntity<T> doPost(String url, HttpEntity httpEntity, Class<T> entityClass) {
-    return restTemplate.exchange(baseUrl + url, HttpMethod.POST, httpEntity, entityClass);
+    return restTemplate.exchange(url, HttpMethod.POST, httpEntity, entityClass);
   }
 }
