@@ -15,6 +15,10 @@ export class BaseHttpClient {
   }
 
   async get<T>(url: string, params?: any): Promise<T> {
-    return (await this.httpClient.get<T>(url, {params})).data;
+    return (await this.httpClient.get<T>(url, {params, headers: this.getHeaders()})).data;
+  }
+
+  getHeaders(): any {
+    return { 'Ocp-Apim-Subscription-Key': 'a6c0610105bd422db5550bec4e487d8a' };
   }
 }
