@@ -8,8 +8,9 @@ import { VideoController } from './api/controllers/video.controller';
 import { AccessTokenController } from './api/controllers/access-token.controller';
 import { VideoService } from './domain/services/video.service';
 import { HttpClient } from './data/httpClient/http-client';
+import { AccessToken } from './data/httpClient/access-token';
 
-const PROVIDERS = [HttpClient, ContextService, ConfigService, VideoService];
+const PROVIDERS = [HttpClient, ContextService, ConfigService, VideoService, AccessToken];
 
 @Module({
   imports: [],
